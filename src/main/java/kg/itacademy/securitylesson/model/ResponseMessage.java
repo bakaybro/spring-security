@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 
 @Data
 @Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class ResponseMessage<T> {
     private T value;

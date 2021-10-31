@@ -14,5 +14,5 @@ public interface UserService {
 
     User getByUsername(String username);
 
-    String getBasicAuthHeaderByAuthModel(UserAuthModel userAuthModel);
+    String getAuthorizationToken(UserAuthModel userAuthModel);
 }

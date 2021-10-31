@@ -5,6 +5,7 @@ import kg.itacademy.securitylesson.model.ResponseMessage;
 import kg.itacademy.securitylesson.model.UserAuthModel;
 import kg.itacademy.securitylesson.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,12 +32,8 @@ public class UserController {
     }
 
     @PostMapping("/sing-in")
-    public ResponseMessage<String> getAuthHeader(@RequestBody UserAuthModel userAuthModel) {
-        ResponseMessage<String> responseMessage = new ResponseMessage<>();
-        try {
-            String authHeader = userService.getBasicAuthHeaderByAuthModel(userAuthModel);
-            return responseMessage.prepareSuccessMessage(authHeader);
-        }
+    public ResponseEntity<String> signIn(@RequestBody UserAuthModel userAuthModel) {
+        return ResponseEntity.ok(userService.getAuthorizationToken(userAuthModel));
     }
 
 

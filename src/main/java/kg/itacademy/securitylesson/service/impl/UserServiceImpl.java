@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String getBasicAuthHeaderByAuthModel(UserAuthModel userAuthModel) {
+    public String getAuthorizationToken(UserAuthModel userAuthModel) {
         String encodedPassword = passwordEncoder.encode(userAuthModel.getPassword());
 
         String userNamePasswordPair = userAuthModel.getName() + ":" + userAuthModel.getPassword();
