@@ -59,12 +59,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String getAuthorizationToken(UserAuthModel userAuthModel) {
-        String encodedPassword = passwordEncoder.encode(userAuthModel.getPassword());
+        User user = userRepository.findByUsername(userAuthModel.getName()).orElseThrow( () -> new IllegalArgumentException("Неверный логин или пароль"));
 
-        String userNamePasswordPair = userAuthModel.getName() + ":" + userAuthModel.getPassword();
+        boolean isPasswordMatches = passwordEncoder.matches(userAuthModel.getPassword(), user.getPassword());
+        if (!isPasswordMatches)
+            throw new IllegalArgumentException("Неверный логин или пароль");
 
-        String authHeader = Arrays.toString(Base64.getEncoder().encode(userNamePasswordPair.getBytes()));
-
-        return authHeader;
+        String usernamePasswordPair = userAuthModel.getName() + ":" + userAuthModel.getPassword();
+        return "Basic " + new String(Base64.getEncoder().encode(usernamePasswordPair.getBytes()));
     }
 }
